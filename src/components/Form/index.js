@@ -184,7 +184,7 @@ const Form = () => {
                 <input type= "email" id ="Email" data-testid = "email" placeholder="Email"/>
                 <br/>
                 <label htmlFor="gender"  > Gender</label>
-                <select id="Gender" >
+                <select id="Gender"  data-test-id="gender">
                    <option  value="select">Select</option>
                     <option value="male" selected >Male</option>
                     <option value="female">Female</option>
@@ -192,13 +192,13 @@ const Form = () => {
                 </select>
                 <br/>
                 <label htmlFor="Number">Phone Number</label>
-                <input type="text" id="Number"  />
+                <input type="text" id="Number" data-testid ="phoneNumber"  />
                 <br />
                 <label htmlFor="Password">Password</label>
-                <input type="password" id="Password"  />
+                <input type="password" id="Password" data-testid = "password" />
                 <br/>
 
-                <p onClick = {validate} style = {{border: "2px solid black",width:"70px",background:"#0879FA",color:"white"}}>Submit</p>
+                <p onClick = {validate} daata-testid = "submit" style = {{border: "2px solid black",width:"70px",background:"#0879FA",color:"white"}}>Submit</p>
             </form>
         </div>
     );
