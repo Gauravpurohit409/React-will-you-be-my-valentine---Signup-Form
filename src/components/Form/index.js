@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Form = () => {
 
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")    
+    const [gender, setGender] = useState("male")
+    const [phoneNumber, setPhoneNumber] = useState("")
+
     const removeOldMessages = () =>{
         const errorMessage = document.querySelector(".errorMessage");
-        // console.log(errorMessage);
+       
         if (errorMessage !== null)
         {
             document.body.removeChild(errorMessage);
@@ -61,8 +67,9 @@ const Form = () => {
         document.body.appendChild(p);
        
     }
-    const checkName = (name) =>{
+    const checkName = () =>{
         
+
         for(const i in name)
         {
             let c = name[i];
@@ -92,110 +99,122 @@ const Form = () => {
         }
         return false;
     }
-    const checkEmail = (email)=>{
+    const checkEmail = ()=>{
+
         return !(email.includes("@"));
     }
 
-    const checkGender = (gender) =>{
-        // console.log(gender);
-        // console.log(gender.value,gender.value === "select");
-        if (gender.value === "select")
+    const checkGender = () =>{
+        if (gender === "select")
             return true;
         return false;
     }
-    const checkPhoneNumber = (number) =>{
+    const checkPhoneNumber = () =>{
         let flag = 0;
-        [...number].forEach(element => {
-          //  console.log(element,isNaN(element));
-            if (isNaN(element))
+        for (const i in phoneNumber)
+        {
+            if (isNaN(phoneNumber[i]))
             { 
                 flag = 1;
+                break;
             }
-        });
+        }
+        
         return (flag === 1);
     }
-    const checkPassword = (password) =>{
+    const checkPassword = () =>{
         console.log(password.length < 6);
         return (password.length < 6);
     }
 
-    const reset = (name,email,gender,number,password)=>{
-        name.value = "";
-        email.value = "";
-        gender.value = "male";
-        number.value = "";
-        password.value = "";
-       
+    const reset = ()=>{
+        
+        setName("");
+        setEmail("");
+        setGender("male");
+        setPassword("");
+        setPhoneNumber("");
     }
     const validate = () =>{
-        const name = document.querySelector('#Name');
-        const email = document.querySelector('#Email');
-        const gender = document.querySelector("#Gender");
-        const number = document.querySelector("#Number");
-        const password = document.querySelector("#Password");
-
+    
+    
         removeOldMessages();
-        if (name.value.length === 0 || email.value.length === 0 || number.value.length === 0 || password.value.length === 0)
+        if (name.length === 0 || email.length === 0 || phoneNumber.length === 0 || password.length === 0)
         {
             attacherrorMessage("len");
         }
-        else if (checkName(name.value))
+        else if (checkName())
         {
             attacherrorMessage("name");
             // Todo : focus the element
-            name.focus();
+            
         }
-        else if (checkEmail(email.value))
+        else if (checkEmail())
         {
             attacherrorMessage("email");
             // Todo : focus the element
-            email.focus();
+            
         }
-        else if (checkGender(gender))
+        else if (checkGender())
         {
             attacherrorMessage("gender");
-            gender.focus();
+            // gender.focus();
         }
-        else if (checkPhoneNumber(number.value))
+        else if (checkPhoneNumber())
         {
             attacherrorMessage("number");
             // Todo : focus the element
-            number.focus();
         }
-        else if (checkPassword(password.value))
+        else if (checkPassword())
         {
             // Todo : focus the element
             attacherrorMessage("password");
-            password.focus();
         }
         else{
 
-            attachWelcomeMessage(email.value);
-            reset(name,email,gender,number,password);
+            attachWelcomeMessage(email);
+            reset();
+        }
+    }
+
+    const change = (e) =>{
+        
+        switch(e.target.id)
+        {
+            case "Name" : setName(e.target.value);
+            break;
+            case "Email": setEmail(e.target.value);
+            break;
+            case "Gender": setGender(e.target.value);
+            break;
+            case "Number":setPhoneNumber(e.target.value);
+            break;
+            case "Password" :setPassword(e.target.value);
+            break;
         }
     }
     return (
         <div>
             <form >
                 <label htmlFor ="Name">Name</label>
-                <input type ="text" id ="Name" data-testid = "name" placeholder = "Enter Name" />
+                <input type ="text" id ="Name" data-testid = "name" placeholder = "Enter Name" onChange = {change} value={name} />
                 <br/>
                 <label htmlFor ="Email">Email</label>
-                <input type= "email" id ="Email" data-testid = "email" placeholder="Email"/>
+                <input type= "email" id ="Email" data-testid = "email" placeholder="Email" value={email} onChange = {change}/>
                 <br/>
                 <label htmlFor="gender"  > Gender</label>
-                <select id="Gender"  data-test-id="gender">
+                <select id="Gender"  data-testid="gender" value = {gender} onChange = {change}>
                    <option  value="select">Select</option>
-                    <option value="male" selected >Male</option>
+                    <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
                 </select>
                 <br/>
                 <label htmlFor="Number">Phone Number</label>
-                <input type="text" id="Number" data-testid ="phoneNumber"  />
+                <input type="text" id="Number" data-testid ="phoneNumber" onChange = {change} value = {phoneNumber} />
                 <br />
                 <label htmlFor="Password">Password</label>
-                <input type="password" id="Password" data-testid = "password" />
+                <input type="password" id="Password" data-testid = "password" value ={password} onChange = {change} />
                 <br/>
 
                 <p onClick = {validate} daata-testid = "submit" style = {{border: "2px solid black",width:"70px",background:"#0879FA",color:"white"}}>Submit</p>
