@@ -211,13 +211,14 @@ const Form = () => {
                 </select>
                 <br/>
                 <label htmlFor="Number">Phone Number</label>
-                <input type="text" id="Number" data-testid ="phoneNumber" onChange = {change} value = {phoneNumber} />
+                   <input type="text" id="Number" data-testid ="phoneNumber" onChange = {change} value = {phoneNumber} />
                 <br />
                 <label htmlFor="Password">Password</label>
                 <input type="password" id="Password" data-testid = "password" value ={password} onChange = {change} />
                 <br/>
 
-                <p onClick = {validate} daata-testid = "submit" style = {{border: "2px solid black",width:"70px",background:"#0879FA",color:"white"}}>Submit</p>
+                
+                <p onClick = {validate} data-testid = "submit" style = {{border: "2px solid black",width:"70px",background:"#0879FA",color:"white"}}>Submit</p>
             </form>
         </div>
     );
